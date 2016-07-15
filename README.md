@@ -1,5 +1,19 @@
 [![Beerpay](https://beerpay.io/atomantic/dotfiles/badge.svg?style=flat-square)](https://beerpay.io/atomantic/dotfiles)
 
+# 3.0.0 Upgrade Instructions!
+
+`3.0.0` brings huge changes. If you have made any modifications (and didn't make your own fork), you will want to backup your dotfiles prior to running `git-up` or `git pull` on `~/.dotfiles`.
+
+Do the following to upgrade your ~/.dotfiles safely:
+
+1. backup your dotfiles: `cp -R ~/.dotfiles ~/.dotfiles_old`
+2. `cd ~/.dotfiles`
+3. update dotfiles: `git-up` or `git pull`
+4. remove old submodule location: `rm -rf .vim` (now lives in `homedir/.vim`)
+5. inspect `install.sh` and `config.js` to make sure all the software you want is installed
+6. inspect `homedir/*` for any changes you want to port from `./dotfiles_old`
+7. run `install.sh` again
+
 # \\[._.]/ - Hi, I'm the OSX bot
 
 I will update your OSX machine with Better™ system defaults, preferences, software configuration and even auto-install some handy development tools and apps that my developer friends find helpful.
@@ -14,11 +28,11 @@ You don't need to install or configure anything upfront! This works with a brand
 - [Watch me run!](#watch-me-run)
 - [Installation](#installation)
   - [Restoring Dotfiles](#restoring-dotfiles)
-- [3.0.0 Upgrade Instructions!](#300-upgrade-instructions)
 - [Additional](#additional)
   - [VIM as IDE](#vim-as-ide)
   - [Crontab](#crontab)
   - [Remap Caps-Lock](#remap-caps-lock)
+- [License](#license)
 - [Settings](#settings)
   - [Configuring General System UI/UX](#configuring-general-system-uiux)
   - [Standard System Changes](#standard-system-changes)
@@ -42,7 +56,6 @@ You don't need to install or configure anything upfront! This works with a brand
   - [Apps](#apps)
   - [NPM Global Modules](#npm-global-modules)
   - [Ruby Gems](#ruby-gems)
-- [License](#license)
 - [Contributions](#contributions)
 - [Loathing, Mehs and Praise](#loathing-mehs-and-praise)
 - [¯\\_(ツ)_/¯ Warning / Liability](#%C2%AF%5C%5C_%E3%83%84_%C2%AF-warning--liability)
@@ -84,6 +97,7 @@ cd ~/.dotfiles;
 ./install.sh
 ```
 * When it finishes, open Iterm and press `Command + ,` to open preferences. Under Profiles > Colors, select "Load Presets" and choose the `Solarized Dark` scheme. If it isn't there for some reason, import it from `~/.dotfiles/configs`
+* run `vim` and then do `:PluginInstall` (you'll see errors loading plugins when vim opens until you do)
 
 > Note: running install.sh is idempotent. You can run it again and again as you add new features or software to the scripts! I'll regularly add new configurations so keep an eye on this repo as it grows and optimizes.
 
@@ -91,24 +105,11 @@ cd ~/.dotfiles;
 
 If you have existing dotfiles for configuring git, zsh, vim, etc, these will be backed-up into `~/.dotfiles_backup/$(date +"%Y.%m.%d.%H.%M.%S")` and replaced with the files from this project. You can restore your original dotfiles by using `./restore.sh $RESTOREDATE` where `$RESTOREDATE` is the date folder name you want to restore.
 
-# 3.0.0 Upgrade Instructions!
-
-`3.0.0` brings huge changes. If you have made any modifications (and didn't make your own fork), you will want to backup your dotfiles prior to running `git-up` or `git pull` on `~/.dotfiles`.
-
-Do the following to upgrade your ~/.dotfiles safely:
-
-1. backup your dotfiles: `cp -R ~/.dotfiles ~/.dotfiles_old`
-2. `cd ~/.dotfiles`
-3. update dotfiles: `git-up` or `git pull`
-4. remove old submodule location: `rm -rf .vim` (now lives in `homedir/.vim`)
-5. inspect `install.sh` and `config.js` to make sure all the software you want is installed
-6. inspect `homedir/*` for any changes you want to port from `./dotfiles_old`
-7. run `install.sh` again
-
 # Additional
 
 ## VIM as IDE
-I am moving away from using `Atom` and instead using `vim` as my IDE. I use Vundle to manage vim plugins (instead of pathogen). Vundle is better in many ways and is compatible with pathogen plugins. Additionally, vundle will manage and install it's own plugins so we don't have to use git submodules for all of them.
+I am moving away from using Atom and instead using vim as my IDE. I use Vundle to manage vim plugins (instead of pathogen). Vundle is better in many ways and is compatible with pathogen plugins. Additionally, vundle will manage and install it's own plugins so we don't have to use git submodules for all of them.
+To install plugins with vundle, pop open vim and run `:PluginInstall`
 
 ## Crontab
 You can `cron ~/.crontab` if you want to add my nightly cron software updates.
@@ -118,6 +119,9 @@ You can `cron ~/.crontab` if you want to add my nightly cron software updates.
 ## Remap Caps-Lock
 - I highly recommend remapping your Caps Lock key to Control per [Dr. Bunsen](http://www.drbunsen.org/remapping-caps-lock/):
 ![Remap Caps Lock](https://raw.githubusercontent.com/atomantic/dotfiles/master/img/remap_capslock.png)
+
+# License
+This project is licensed under ISC. Please fork, contribute and share.
 
 # Settings
 This project changes a number of settings and configures software on OSX.
@@ -259,7 +263,7 @@ Here is the current list:
 - Installing the Solarized Dark theme for iTerm
 - Don’t display the annoying prompt when quitting iTerm
 - Hide tab title bars
-- Set system-wide hotkey to show/hide iterm with ctrl+tick ( `^` + `)
+- Set system-wide hotkey to show/hide iterm with ^`
 - Set normal font to Hack 12pt
 - Set non-ascii font to Roboto Mono for Powerline 12pt
 
@@ -305,7 +309,6 @@ The following is the software that I have set as default:
 * moreutils
 * findutils
 * ack
-* ag
 * dos2unix
 * fortune
 * gawk
@@ -334,11 +337,14 @@ The following is the software that I have set as default:
 * iterm2
 * sizeup
 * xquartz
+* google-chrome
 
 ## NPM Global Modules
 
 * antic
 * buzzphrase
+* bower
+* bower-check-updates
 * esformatter
 * eslint
 * generator-dockerize
@@ -352,9 +358,6 @@ The following is the software that I have set as default:
 ## Ruby Gems
 * git-up
 
-# License
-This project is licensed under ISC. Please fork, contribute and share.
-
 # Contributions
 Contributions are always welcome in the form of pull requests with explanatory comments.
 
@@ -364,9 +367,9 @@ Please refer to the [Contributor Covenant](https://github.com/atomantic/dotfiles
 1. Loathing should be directed into pull requests that make it better. woot.
 2. Bugs with the setup should be put as GitHub issues.
 3. Mehs should be > /dev/null
-4. Praise should be directed to ![@antic](https://img.shields.io/twitter/follow/antic.svg?style=social&label=@antic)
+4. Praise should be directed to [@antic](http://twitter.com/antic) or [@matthewmccull](http://twitter.com/matthewmccull) or [@mathiasbynens](https://github.com/mathiasbynens/dotfiles)
 
 
 # ¯\\_(ツ)_/¯ Warning / Liability
 > Warning:
-The creator of this repo is not responsible if your machine ends up in a state you are not happy with. If you are concerned, look at the code to review everything this will do to your machine :)
+The creator of this repo is not responsible if your machine ends up in a state you are not happy with. If you are concerned, look at install.sh and osx.sh to review everything this script will do to your machine :)
